@@ -112,7 +112,7 @@ namespace rosbridge2cpp {
 
 	bool ROSBridge::QueueMessage(const std::string& topic_name, size_t queue_size, ROSBridgePublishMsg& msg)
 	{
-		assert(bson_only_mode_); // queueing is not supported for json data
+		//assert(bson_only_mode_); // queueing is not supported for json data
 
 		if (!run_publisher_queue_thread_)
 		{
@@ -420,7 +420,17 @@ namespace rosbridge2cpp {
 			uint32_t bson_size = msg->len;
 			{
 				spinlock::scoped_lock_wait_for_long_task lock(transport_layer_access_mutex_);
-				const bool success = transport_layer_.SendMessage(bson_data, bson_size);
+				bool success;
+
+				if (bson_only_mode())
+				{
+					success = transport_layer_.SendMessage(bson_data, bson_size);
+				}
+				else
+				{
+					success = transport_layer_.SendMessage(bson_as_json(msg, nullptr));
+				}
+				
 				bson_destroy(msg);
 				if (!success)
 				{
