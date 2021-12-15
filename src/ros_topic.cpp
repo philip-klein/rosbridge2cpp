@@ -155,6 +155,17 @@ namespace rosbridge2cpp {
 		return ros_.SendMessage(cmd);
 	}
 
+	bool ROSTopic::Publish(const std::string &message)
+	{
+		if (!is_advertised_) {
+			if (!Advertise()) {
+				return false;
+			}
+		}
+
+		return ros_.SendMessage(message);
+	}
+
 	bool ROSTopic::Publish(bson_t *message)
 	{
 		if (!is_advertised_) {
