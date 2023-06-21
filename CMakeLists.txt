@@ -22,12 +22,6 @@ else()
 endif()
 
 find_package(Threads REQUIRED)
-if(THREADS_HAVE_PTHREAD_ARG)
-  target_compile_options(rosbridge2cpp PUBLIC "-pthread")
-endif()
-if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(rosbridge2cpp "${CMAKE_THREAD_LIBS_INIT}")
-endif()
 
 set(PROJECT_NAME rosbridge2cpp)
 
@@ -65,6 +59,14 @@ ADD_LIBRARY( rosbridge2cpp SHARED
 	src/ros_service.cpp 
 	src/ros_tf_broadcaster.cpp 
 )
+
+if(THREADS_HAVE_PTHREAD_ARG)
+  target_compile_options(rosbridge2cpp-client PUBLIC "-pthread")
+endif()
+if(CMAKE_THREAD_LIBS_INIT)
+  target_link_libraries(rosbridge2cpp-client "${CMAKE_THREAD_LIBS_INIT}")
+endif()
+
 target_link_libraries(rosbridge2cpp-client ${LIBS})
 target_link_libraries(rosbridge2cpp ${LIBS})
 #
