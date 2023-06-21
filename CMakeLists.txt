@@ -26,7 +26,7 @@ find_package(Threads REQUIRED)
 set(PROJECT_NAME rosbridge2cpp)
 
 if(NOT WIN32)
-	set(CMAKE_CXX_FLAGS "-g -Wall")
+	set(CMAKE_CXX_FLAGS "-g -Wall -Wno-ignored-attributes -Wno-sign-compare -Wno-class-memaccess")
 endif()
 
 set(CXX_STANDARD C++11)
