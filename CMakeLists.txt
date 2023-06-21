@@ -4,7 +4,7 @@
 # googletest in the build/ dir:
 # http://stackoverflow.com/questions/9689183/cmake-googletest/9695234#9695234
 # However, this requires an active internet connection
-
+project(rosbridge2cpp)
 
 cmake_minimum_required(VERSION 2.8)
 option(test "Build all tests." OFF) # Makes boolean 'test' available.
@@ -22,7 +22,6 @@ else()
 endif()
 
 set(PROJECT_NAME rosbridge2cpp)
-project(${PROJECT_NAME})
 
 if(NOT WIN32)
 	set(CMAKE_CXX_FLAGS "-g -Wall")
